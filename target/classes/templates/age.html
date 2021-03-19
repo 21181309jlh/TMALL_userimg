@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>天猫用户画像</title>
+    <link rel="stylesheet" type="text/css" href="css/view.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/echarts/echarts.min.js"></script>
+    <script th:inline="javascript">
+        var from11to20=[[${from11to20}]];
+        var from21to30=[[${from21to30}]];
+        var from31to40=[[${from31to40}]];
+        var from41to50=[[${from41to50}]];
+        var from51to60=[[${from51to60}]];
+        var from61to70=[[${from61to70}]];
+        var from71to80=[[${from71to80}]];
+        //页面加载完毕后执行
+        $(function () {
+            var ageChart = echarts.init($('#age').get(0));
+            var ageoption={
+                title: {
+                    text: '用户年龄统计',
+                    left: 'center'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['11-20', '21-30', '31-40', '41-50', '51-60', '61-70','71-80']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: [ from11to20, from21to30, from31to40, from41to50,
+                        from51to60, from61to70, from71to80 ],
+                    type: 'line',
+                    smooth: true
+                }]
+            };
+            ageChart.setOption(ageoption);
+        });
+
+    </script>
+
+</head>
+<body>
+
+<div class="head-image">
+    <img src="img/header.jpg" width="100%" height="100%">
+</div>
+
+<div class="container">
+
+    <div class="header"><h1 class="header">用户画像</h1></div>
+
+    <div class="left">
+        <div class="d1">用户个人信息统计</div>
+        <div class="d2"><a href="sex">用户性别统计</a></div>
+        <div class="d2"><a href="age">用户年龄统计</a></div>
+        <div class="d2"><a href="province">用户地域统计</a></div>
+        <div class="d1">用户购物信息统计</div>
+        <div class="d2"><a href="paylike">用户支付方式偏好</a></div>
+        <div class="d2"><a href="shoplike">用户购物偏好</a></div>
+        <div class="d2"><a href="shopability">用户消费能力</a></div>
+    </div>
+
+    <div class="content">
+        <section id="age" class="chart"></section>
+    </div>
+
+    <div class="footer">@小饼干</div>
+</div>
+
+</body>
+</html>

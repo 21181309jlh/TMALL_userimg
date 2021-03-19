@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>天猫用户画像</title>
+    <link rel="stylesheet" type="text/css" href="css/view.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/echarts/echarts.min.js"></script>
+    <script src="js/china.js"></script>
+    <script th:inline="javascript">
+        //页面加载完毕后执行
+        $(function () {
+            var myChart = echarts.init(document.getElementById('province'));
+            function randomData() {
+                return Math.round(Math.random() * 1000);
+            }
+
+            var data = [  {
+                name: '内蒙古',
+                value: [[${neimenggu}]],
+
+            }, {
+                name: '吉林',
+                value: [[${jilin}]],
+            },{
+                name: '宁夏',
+                value: [[${ningxia}]],
+            }, {
+                name: '安徽',
+                value: [[${anhui}]],
+            },{
+                name: '山东',
+                value: [[${shandong}]],
+            },{
+                name: '广西',
+                value: [[${guangxi}]],
+            },{
+                name: '新疆',
+                value: [[${xinjiang}]],
+            },{
+                name: '江苏',
+                value: [[${jiangsu}]],
+            },{
+                name: '河南',
+                value: [[${henan}]],
+            },{
+                name: '浙江',
+                value: [[${zhejiang}]],
+            },{
+                name: '海南',
+                value: [[${hainan}]],
+            },{
+                name: '湖北',
+                value: [[${hubei}]],
+            },{
+                name: '湖南',
+                value: [[${hunan}]],
+            },{
+                name: '甘肃',
+                value: [[${gansu}]],
+            },{
+                name: '福建',
+                value: [[${fujian}]],
+            },{
+                name: '西藏',
+                value: [[${xizang}]],
+            },{
+                name: '贵州',
+                value: [[${guizhou}]],
+            },{
+                name: '辽宁',
+                value: [[${liaoning}]],
+            },{
+                name: '青海',
+                value: [[${qinghai}]],
+            },{
+                name: '黑龙江',
+                value: [[${heilongjiang}]],
+            },{
+                name: '陕西',
+                value: [[${shanxi}]],
+            },{
+                name: '山西',
+                value: [[${shanxi1}]],
+            },{
+                name: '广东',
+                value: [[${guangdong}]],
+            },{
+                name: '河北',
+                value: [[${hebei}]],
+            }, {
+                name: '江西',
+                value: [[${jiangxi}]],
+            },{
+                name: '天津',
+                value: [[${tianjin}]],
+            },{
+                name: '重庆',
+                value: [[${chongqing}]],
+            }, {
+                name: '台湾',
+                value: [[${taiwan}]],
+            },{
+                name: '上海',
+                value: [[${shanghai}]],
+            }, {
+                name: '云南',
+                value: [[${yunnan}]],
+            },{
+                name: '北京',
+                value: [[${beijing}]],
+            },{
+                name: '四川',
+                value: [[${sichuan}]],
+            }];
+
+
+            var resultdata0 = [];
+            var sum0 = 0;
+            var titledata = [];
+            for (var i = 0; i < data.length; i++) {
+                var d0 = {
+                    name: data[i].name,
+                    value: data[i].value
+                };
+                titledata.push(data[i].name)
+                resultdata0.push(d0);
+                sum0 += data[i].value;
+            }
+
+            function NumDescSort(a,b){
+                return a.value-b.value;
+            }
+
+            //resultdata0.sort(NumDescSort);
+
+            var option = {
+                title: {                   //标题
+                    text: '用户地域分布',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                visualMap: {             　　//左下角拉条
+                    min: 0,
+                    max: 15,
+                    left: 'left',
+                    top: '50',
+                    text: ['高', '低'],
+                    calculable: true,
+                    colorLightness: [0.2, 100],
+                    color: ['#c05050','#e5cf0d','#5ab1ef'],
+                    dimension: 0
+                },
+                toolbox: {                  //右边工具栏
+                    show: true,
+                    orient: 'vertical',
+                    left: 'right',
+                    top: 'center',
+                    feature: {
+                        dataView: {
+                            readOnly: false
+                        },
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                grid: {                 //右边的bar
+                    right: '30%',
+                    top: 100,
+                    bottom: 40,
+                    height:'80%',
+                    width: '30%'
+                },
+                xAxis: [{
+                    position: 'top',
+                    type: 'value',
+                    boundaryGap: false,
+                    splitLine: {
+                        show: false
+                    },
+                    axisLabel:{
+                        rotate:45, 　　　　//刻度旋转45度角
+                        textStyle:{
+                        }
+                    }
+                }],
+                yAxis: [{
+                    type: 'category',
+                    data: titledata,
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }],
+                barWidth:30,
+                series: [{              //地图
+                    z: 1,
+                    name: '全部',
+                    type: 'map',
+                    map: 'china',
+                    left: '10',
+                    right: '70%',
+                    top: 100,
+                    bottom: "35%",
+                    zoom: 1,
+                    label: {
+                        normal: {
+                            show: true
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    },
+                    //roam: true,
+                    data: resultdata0
+                }, {                //bar
+                    name: '全部',
+                    z: 1,
+                    type: 'bar',
+                    barWidth: '%15',
+                    label: {
+                        normal: {
+                            show: true,
+                        },
+                        emphasis: {
+                            show: true,
+                        }
+                    },
+                    itemStyle: {
+                        emphasis: {
+                            color: "rgb(254,153,78)"
+                        }
+                    },
+                    data: resultdata0
+                }]
+            };
+            myChart.setOption(option);
+        });
+
+    </script>
+
+</head>
+<body>
+
+<div class="head-image">
+    <img src="img/header.jpg" width="100%" height="100%">
+</div>
+
+<div class="container">
+
+    <div class="header"><h1 class="header">用户画像</h1></div>
+
+    <div class="left">
+        <div class="d1">用户个人信息统计</div>
+        <div class="d2"><a href="sex">用户性别统计</a></div>
+        <div class="d2"><a href="age">用户年龄统计</a></div>
+        <div class="d2"><a href="province">用户地域统计</a></div>
+        <div class="d1">用户购物信息统计</div>
+        <div class="d2"><a href="paylike">用户支付方式偏好</a></div>
+        <div class="d2"><a href="shoplike">用户购物偏好</a></div>
+        <div class="d2"><a href="shopability">用户消费能力</a></div>
+    </div>
+
+    <div class="content">
+        <section id="province" class="chart"></section>
+    </div>
+
+    <div class="footer">@小饼干</div>
+</div>
+
+</body>
+</html>

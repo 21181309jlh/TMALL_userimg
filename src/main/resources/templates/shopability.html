@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>天猫用户画像</title>
+    <link rel="stylesheet" type="text/css" href="css/view.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/echarts/echarts.min.js"></script>
+    <script th:inline="javascript">
+        var from0to100=[[${from0to100}]];
+        var from101to200=[[${from101to200}]];
+        var from201to300=[[${from201to300}]];
+        var from301to400=[[${from301to400}]];
+        var from401to500=[[${from401to500}]];
+        var from501to600=[[${from501to600}]];
+        var from601to700=[[${from601to700}]];
+        var from701to800=[[${from701to800}]];
+        var from801to900=[[${from801to900}]];
+        var from901to1000=[[${from901to1000}]];
+        var from1001to3000=[[${from1001to3000}]];
+        var from3001to5000=[[${from3001to5000}]];
+        var largethan5000=[[${largethan5000}]];
+        //页面加载完毕后执行
+        $(function () {
+            var shopabilityChart = echarts.init($('#shopability').get(0));
+            shopabilityoption = {
+                title: {
+                    text: '用户购买能力统计',
+                    left: 'center'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['0-100', '101-200', '201-300', '301-400',
+                        '401-500', '501-600', '601-700','701-800',
+                        '801-900','901-1000','1001-3000','3001-5000','>5000']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: [from0to100, from101to200, from201to300,from301to400,
+                        from401to500, from501to600, from601to700, from701to800,
+                        from801to900,from901to1000,from1001to3000,from3001to5000,largethan5000],
+                    type: 'bar',
+                    showBackground: true,
+                    backgroundStyle: {
+                        color: 'rgba(180, 180, 180, 0.2)'
+                    }
+                }]
+            };
+            shopabilityChart.setOption(shopabilityoption);
+        });
+
+    </script>
+
+</head>
+<body>
+
+<div class="head-image">
+    <img src="img/header.jpg" width="100%" height="100%">
+</div>
+
+<div class="container">
+
+    <div class="header"><h1 class="header">用户画像</h1></div>
+
+    <div class="left">
+        <div class="d1">用户个人信息统计</div>
+        <div class="d2"><a href="sex">用户性别统计</a></div>
+        <div class="d2"><a href="age">用户年龄统计</a></div>
+        <div class="d2"><a href="province">用户地域统计</a></div>
+        <div class="d1">用户购物信息统计</div>
+        <div class="d2"><a href="paylike">用户支付方式偏好</a></div>
+        <div class="d2"><a href="shoplike">用户购物偏好</a></div>
+        <div class="d2"><a href="shopability">用户消费能力</a></div>
+    </div>
+
+    <div class="content">
+        <section id="shopability" class="chart"></section>
+    </div>
+
+    <div class="footer">@小饼干</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>天猫用户画像</title>
+    <link rel="stylesheet" type="text/css" href="css/view.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/echarts/echarts.min.js"></script>
+    <script th:inline="javascript">
+        /*
+		var alipay=[[${alipay}]];
+        var wechat=[[${wechat}]];
+        var bank=[[${bank}]];
+        var money=[[${money}]];
+		*/
+        var foods=[[${foods}]];
+        var clothes=[[${clothes}]];
+        var electronic=[[${electronic}]];
+        var life=[[${life}]];
+        //页面加载完毕后执行
+        $(function () {
+            var shoplikeChart = echarts.init($('#shoplike').get(0));
+
+            // 指定图表的配置项和数据
+            var shoplikeoption = {
+                title: {
+                    text: '用户购物偏好',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                series: [
+                    {
+                        name:  '购物偏好',
+                        type: 'pie',
+                        radius: '70%',
+                        data: [
+                            {value: foods, name: '食物'},
+                            {value: clothes, name: '服装'},
+                            {value: electronic, name: '电子产品'},
+                            {value: life, name: '生活用品'},
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            shoplikeChart.setOption(shoplikeoption);
+        });
+    </script>
+
+</head>
+<body>
+
+<div class="head-image">
+    <img src="img/header.jpg" width="100%" height="100%">
+</div>
+
+<div class="container">
+
+    <div class="header"><h1 class="header">用户画像</h1></div>
+
+    <div class="left">
+        <div class="d1">用户个人信息统计</div>
+        <div class="d2"><a href="sex">用户性别统计</a></div>
+        <div class="d2"><a href="age">用户年龄统计</a></div>
+        <div class="d2"><a href="province">用户地域统计</a></div>
+        <div class="d1">用户购物信息统计</div>
+        <div class="d2"><a href="paylike">用户支付方式偏好</a></div>
+        <div class="d2"><a href="shoplike">用户购物偏好</a></div>
+        <div class="d2"><a href="shopability">用户消费能力</a></div>
+    </div>
+
+    <div class="content">
+        <section id="shoplike" class="chart"></section>
+    </div>
+
+    <div class="footer">@小饼干</div>
+</div>
+
+</body>
+</html>
